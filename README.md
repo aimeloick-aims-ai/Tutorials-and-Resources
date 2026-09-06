@@ -1,41 +1,49 @@
 # Tutorials and Resources
 
-A curated hub for my learning projects, technical exercises, demonstrations, and reusable resources across machine learning, deep learning, scientific computing, NLP, and software development.
+A curated hub for my learning projects, technical exercises, demonstrations, and reusable resources across machine learning, deep learning, scientific computing, NLP, data analysis, and software development.
 
-This repository is used to consolidate smaller or older projects that do not need to remain standalone portfolio repositories.
+This repository is the canonical home for smaller or older projects that do not need to remain standalone portfolio repositories. Their original repositories are retained for history, while this hub provides the organized navigation layer.
 
 ## Machine Learning Fundamentals
 
-- [Decision Tree Classification](https://github.com/aimeloick-aims-ai/Decision-tree-classification) — decision-tree classification workflow and evaluation.
-- [Ridge, Lasso and Elastic Net](https://github.com/aimeloick-aims-ai/Ridge-Lasso-et-Elastic-net) — regularized regression methods.
-- [Clustering and Profiling](https://github.com/aimeloick-aims-ai/Plofilage_Clustering) — unsupervised learning and profile analysis.
-
-## Computer Vision
-
-- [Image Processing and Pattern Recognition](https://github.com/aimeloick-aims-ai/Traitement-Image-et-Reconnaissance-de-forme) — image-processing and pattern-recognition exercises.
-
-## Scientific Computing and AI for Science
-
-- [Numerical Simulation](https://github.com/aimeloick-aims-ai/Simulation-numerique) — numerical modelling and simulation exercises.
-- [Heat Diffusion with PINNs](https://github.com/aimeloick-aims-ai/Difffusion-de-chaleur-avec-Pinns) — physics-informed neural networks for heat diffusion.
+- [Decision Tree Classification](machine-learning/decision-tree-classification) — decision-tree classification and evaluation on the Pima Indians Diabetes dataset.
+- [Ridge, Lasso and Elastic Net](machine-learning/ridge-lasso-elastic-net) — regularized linear-model exercises and car-price regression.
+- [Clustering and Profiling](machine-learning/clustering-and-profiling) — clustering, exploratory analysis, and profile segmentation.
 
 ## Machine Learning Systems
 
-- [ML at Scale](https://github.com/aimeloick-aims-ai/ML-a-Scale-) — experiments and coursework on scaling machine-learning workflows.
+- [Machine Learning at Scale](machine-learning/ml-at-scale) — coursework and experiments on scalable machine-learning workflows and systems.
+
+## Computer Vision
+
+- [Image Processing and Pattern Recognition](computer-vision/image-processing-pattern-recognition) — coursework and practical exercises in image processing and pattern recognition.
+
+## Scientific Computing and AI for Science
+
+- [Numerical Simulation](scientific-computing/numerical-simulation) — numerical modelling and simulation exercises from my mathematical-engineering training.
+- [Heat Diffusion with PINNs](scientific-computing/heat-diffusion-pinns) — physics-informed neural networks for solving the heat equation with PyTorch.
 
 ## Applications and Demos
 
-- [Streamlit GDP Demo](https://github.com/aimeloick-aims-ai/BFT) — simple Streamlit application used for deployment practice.
-- [Credit-Risk Prediction Demo](https://github.com/aimeloick-aims-ai/Demo-Prevision-risque-credit) — applied machine-learning demonstration for credit-risk prediction.
-- [Chatbot](https://github.com/aimeloick-aims-ai/chatbot) — small conversational-AI experiment.
+- [Credit-Risk Prediction Demo](applications/credit-risk-demo) — deployment/demo companion to my engineering-thesis credit-risk work.
+- [Chatbot Template](applications/chatbot) — small conversational-AI and Streamlit learning exercise.
+- [Streamlit GDP Template](applications/streamlit-gdp-template) — simple Streamlit deployment exercise.
+
+## Data Analysis
+
+- [BFT Stata Exercises](data-analysis/bft-stata) — supporting Stata and data-analysis material retained as learning/reference work.
 
 ## Software Development Practice
 
-- [Symfony 5 Pinterest Clone](https://github.com/aimeloick-aims-ai/Entrainement-Symfony-5-Clone-de-Pinterest-) — web-development practice project.
+- [Symfony 5 Pinterest Clone](software-development/symfony-pinterest-clone) — earlier Symfony 5 web-development practice.
 
-## Related Standalone Portfolio Projects
+## Sandbox
 
-These projects are substantial enough to remain separate repositories:
+- [Demo Sandbox](sandbox/demo) — small experimental material that is not part of my active research portfolio.
+
+## Standalone Portfolio and Research Repositories
+
+The following remain separate because they represent research directions, major projects, or substantive portfolio work:
 
 - [Engineering Thesis — Credit Risk Prediction](https://github.com/aimeloick-aims-ai/Memoire-d-Ingenieur-GOHOUEDE-Aime-Loick)
 - [Data Tour 2024](https://github.com/aimeloick-aims-ai/Data-Tour-2024)
@@ -47,4 +55,4 @@ These projects are substantial enough to remain separate repositories:
 
 ## Organization Principle
 
-**Standalone repositories** are reserved for research, publications, major portfolio projects, or actively developed technical work. Smaller exercises, demos, and learning material are progressively consolidated here so the overall GitHub profile remains focused and easy to navigate.
+**Standalone repositories** are reserved for research, publications, major portfolio projects, or actively developed technical work. Smaller exercises, templates, demos, and legacy coursework are catalogued here so the overall GitHub profile stays focused and easy to navigate.
