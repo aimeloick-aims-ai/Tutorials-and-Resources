@@ -1,0 +1,18 @@
+{% form_theme deuxform 'bootstrap_4_layout.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
+
+{% block title 'Edit Pin #' ~ pin.id%}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-md-6 mx-auto">
+			<h1>Edit Pin#{{pin.id}}</h1>
+			{{form_start(deuxform)}}
+			{{form_widget(deuxform)}}
+			<input type="submit" value="{{ submitButtonText ?? 'Edit Pin'}}" class="btn btn-primary  btn-block " formnovalidate>
+
+			{{form_end(deuxform)}}
+		</div>
+	</div>
+{% endblock %}

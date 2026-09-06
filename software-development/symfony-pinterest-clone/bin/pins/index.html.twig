@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title 'Find all best pin onearth!'%}
+
+{% block body %}
+
+	<h1>{{pluriel(pins|length,'Pin' ,'Pins')}}
+
+	</h1>
+
+	{% for i in pins %}
+		<article>
+			<h2>
+				<a href="{{path('app_pins_show',{id:i.id})}}">{{i.title}}</a>
+			</h2>
+			<p>{{i.description|u.truncate(10,'......',false)}}</p>
+			<p>Submitted
+				{{i.createdAt|ago}}</p>
+		</article>
+
+	{% endfor %}
+{% endblock %}

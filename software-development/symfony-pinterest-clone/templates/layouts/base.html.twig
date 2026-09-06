@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="{{app.request.locale}}">
+	<head>
+		<meta charset="UTF-8">
+
+		<title>
+			{% block title %}Panterest
+			{% endblock %}
+		</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+
+			<link rel="stylesheet" href="{{asset('build/app.css') }}">
+		{% endblock %}
+
+
+	</head>
+
+	<body>
+		{% include "layouts/partials/flash_message.html.twig" %}
+		{% include "layouts/partials/nav.html.twig" %}
+
+		<main role="main" class=" container"> {% block body %}{% endblock %}
+			</main>
+			{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+			<script src="{{asset('build/runtime.js') }}">
+				<script src="{{asset('build/app.js') }}">
+
+					{% endblock %}
+																																																																													       
+																											 </body>
+																														{% include "layouts/partials/footer.html.twig" %}

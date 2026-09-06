@@ -1,0 +1,13 @@
+{% form_theme formu'bootstrap_4_layout.html.twig' %}
+
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Create Pin
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-md-6 mx-auto">
+			<h1>Create Pin</h1>
+			{{include ('pins/_form.html.twig',{submitButtonText:'Create Pin'})}}
+		{% endblock %}

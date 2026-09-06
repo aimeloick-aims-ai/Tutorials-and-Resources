@@ -1,0 +1,50 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title 'Find all best pin onearth!'%}
+
+{% block body %}
+	{% if pins|length >0 %}
+		<h1 mb-4 class="text-center text-muted">{{pluriel (pins|length,'Pin' ,'Pins')}}
+
+		</h1>
+
+		{% for row in pins|batch(3) %}
+			<div class="row mb-5">
+				{% for i in row %}
+					<div class="col-md-4">
+						<article class="bg-white rounded shadow">
+							<div class="mw-100 overflow-hidden rounded-top">
+								{% if vich_uploader_asset(i) is null %}
+
+									<a href="{{path('app_pins_show',{id:i.id})}}"><img src="{{ asset('/build/images/shoot-raw.3b79a516.jpg')| imagine_filter('squared_thumbnail_medium') }}" class="w-100 "></a>
+
+								{% else %}
+									<a href="{{path('app_pins_show',{id:i.id})}}"><img src="{{ vich_uploader_asset(i)| imagine_filter('squared_thumbnail_medium') }}" alt="{{ i.title}}" class="w-100 "></a>
+
+								{% endif %}
+							</div>
+
+
+							<h2 class="h5 ps-3 pt-3 ">
+								<a href=" {{path('app_pins_show',{id:i.id} )}}" class=" text-secondary text-decoration-none">{{i.title}}</a>
+							</h2>
+							<p class="ps-3 pb-3 text-muted">{{i.description|u.truncate(10,'......',false)}}</p>
+							<p class="ps-3 pb-3 text-muted">
+								<small>Submitted by
+									{{i.user.firstName}}
+									{{i.user.lastName}}
+									{{i.createdAt|ago}}</small>
+							</p>
+						</article>
+					</div>
+
+				{% endfor %}
+			</div>
+		{% endfor %}
+
+	{% else %}
+		<p class=" h1 mt-5 text-center">Aucun pin !
+			<a href="{{path('app_pins_create')}}">Soyez le premier à creer un pin</a>
+		</p>
+	{% endif %}
+{% endblock %}

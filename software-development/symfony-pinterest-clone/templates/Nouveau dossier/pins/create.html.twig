@@ -1,0 +1,21 @@
+{% form_theme monformulaire 'bootstrap_4_layout.html.twig' %}
+
+{% extends 'layouts/base.html.twig' %}
+
+{% block title 'New Pin'%}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-md-6 mx-auto">
+			<h1>Create Pin</h1>
+			<p>
+				{{form_start(monformulaire)}}
+				{{form_widget(monformulaire)}}
+				<input type="submit" value="{{submitButtonText ?? ' Create Pin '}}" class="btn btn-primary btn-block" formnovalidate>
+			</p>
+		</input>
+
+		{{form_end(monformulaire)}}
+	</p>
+</div></div>{% endblock %}
