@@ -1,0 +1,103 @@
+name: Consolidate legacy project files
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/migrate-legacy-projects.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tutorials hub
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Clone public source repositories
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/legacy
+          git clone --depth 1 https://github.com/aimeloick-aims-ai/Decision-tree-classification.git /tmp/legacy/decision-tree
+          git clone --depth 1 https://github.com/aimeloick-aims-ai/Ridge-Lasso-et-Elastic-net.git /tmp/legacy/ridge-lasso
+          git clone --depth 1 https://github.com/aimeloick-aims-ai/Simulation-numerique.git /tmp/legacy/numerical-simulation
+          git clone --depth 1 https://github.com/aimeloick-aims-ai/chatbot.git /tmp/legacy/chatbot
+          git clone --depth 1 https://github.com/aimeloick-aims-ai/BFT.git /tmp/legacy/gdp-demo
+          git clone --depth 1 https://github.com/aimeloick-aims-ai/Demo-Prevision-risque-credit.git /tmp/legacy/credit-risk-demo
+          git clone --depth 1 https://github.com/aimeloick-aims-ai/Traitement-Image-et-Reconnaissance-de-forme.git /tmp/legacy/computer-vision
+          git clone --depth 1 https://github.com/aimeloick-aims-ai/Difffusion-de-chaleur-avec-Pinns.git /tmp/legacy/pinns
+
+      - name: Copy curated project files into the hub
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Decision tree: notebook, dataset and generated plots.
+          mkdir -p machine-learning/decision-tree-classification/plots
+          cp /tmp/legacy/decision-tree/Decision_Tree_Classification.ipynb machine-learning/decision-tree-classification/
+          cp /tmp/legacy/decision-tree/pima-indians-diabetes.csv machine-learning/decision-tree-classification/
+          cp -R /tmp/legacy/decision-tree/plots/. machine-learning/decision-tree-classification/plots/
+
+          # Regularized regression notebook. The original repository does not contain its referenced sdata.csv dataset.
+          mkdir -p machine-learning/ridge-lasso-elastic-net
+          cp /tmp/legacy/ridge-lasso/lasso_linéaire.ipynb machine-learning/ridge-lasso-elastic-net/
+
+          # Numerical simulation source code.
+          mkdir -p scientific-computing/numerical-simulation
+          cp /tmp/legacy/numerical-simulation/*.py scientific-computing/numerical-simulation/
+
+          # Small Streamlit chatbot template.
+          mkdir -p applications/chatbot
+          cp /tmp/legacy/chatbot/streamlit_app.py applications/chatbot/
+          cp /tmp/legacy/chatbot/requirements.txt applications/chatbot/
+
+          # Streamlit GDP demo/template.
+          mkdir -p applications/streamlit-gdp-template/data
+          cp /tmp/legacy/gdp-demo/streamlit_app.py applications/streamlit-gdp-template/
+          cp /tmp/legacy/gdp-demo/requirements.txt applications/streamlit-gdp-template/
+          cp -R /tmp/legacy/gdp-demo/data/. applications/streamlit-gdp-template/data/
+
+          # Credit-risk Streamlit demo. Deliberately excludes .streamlit/secrets.toml,
+          # notebook checkpoints and the archived zip file.
+          mkdir -p applications/credit-risk-demo/.streamlit
+          mkdir -p applications/credit-risk-demo/pages
+          mkdir -p applications/credit-risk-demo/Loan_Data
+          mkdir -p applications/credit-risk-demo/Model
+          mkdir -p applications/credit-risk-demo/image
+          cp /tmp/legacy/credit-risk-demo/app.py applications/credit-risk-demo/
+          cp /tmp/legacy/credit-risk-demo/requirements.txt applications/credit-risk-demo/
+          cp /tmp/legacy/credit-risk-demo/.streamlit/config.toml applications/credit-risk-demo/.streamlit/
+          cp -R /tmp/legacy/credit-risk-demo/pages/. applications/credit-risk-demo/pages/
+          cp -R /tmp/legacy/credit-risk-demo/Loan_Data/. applications/credit-risk-demo/Loan_Data/
+          cp -R /tmp/legacy/credit-risk-demo/Model/. applications/credit-risk-demo/Model/
+          cp -R /tmp/legacy/credit-risk-demo/image/. applications/credit-risk-demo/image/
+
+          # Computer-vision notebook (outputs are embedded in the notebook).
+          mkdir -p computer-vision/image-processing-pattern-recognition
+          cp /tmp/legacy/computer-vision/GOHOUEDE_Aime.ipynb computer-vision/image-processing-pattern-recognition/
+
+          # PINN project: notebook, Python implementation and figures.
+          mkdir -p scientific-computing/heat-diffusion-pinns/plots
+          cp /tmp/legacy/pinns/Chaleur_pinns.ipynb scientific-computing/heat-diffusion-pinns/
+          cp /tmp/legacy/pinns/Code.py scientific-computing/heat-diffusion-pinns/
+          cp -R /tmp/legacy/pinns/plots/. scientific-computing/heat-diffusion-pinns/plots/
+
+      - name: Commit migration and remove one-time workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/migrate-legacy-projects.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No migration changes to commit."
+            exit 0
+          fi
+          git commit -m "Consolidate legacy project files into tutorials hub"
+          git push
