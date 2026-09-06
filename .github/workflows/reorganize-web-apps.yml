@@ -1,0 +1,58 @@
+name: Reorganize web app projects
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/reorganize-web-apps.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  reorganize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Group framework projects
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p web-apps/streamlit web-apps/django web-apps/symfony
+
+          if [ -d applications/chatbot ]; then
+            git mv applications/chatbot web-apps/streamlit/chatbot
+          fi
+          if [ -d applications/credit-risk-demo ]; then
+            git mv applications/credit-risk-demo web-apps/streamlit/credit-risk-demo
+          fi
+          if [ -d applications/streamlit-gdp-template ]; then
+            git mv applications/streamlit-gdp-template web-apps/streamlit/gdp-dashboard-template
+          fi
+          if [ -d software-development/symfony-pinterest-clone ]; then
+            git mv software-development/symfony-pinterest-clone web-apps/symfony/pinterest-clone
+          fi
+
+          # Preserve only the public Streamlit source from the BFT profiling repo;
+          # datasets/reports are intentionally not copied into the public hub.
+          git clone --depth 1 https://github.com/aimeloick-aims-ai/Plofilage_Clustering.git /tmp/profiling
+          mkdir -p web-apps/streamlit/clustering-profiling
+          cp /tmp/profiling/Clustering.py web-apps/streamlit/clustering-profiling/Clustering.py
+          cat > web-apps/streamlit/clustering-profiling/README.md <<'EOF'
+# Clustering & Profiling Streamlit App
+
+Legacy Streamlit source retained as a code example. Business datasets, Excel/Power BI files and reports from the original BFT project are intentionally excluded from this public hub.
+EOF
+
+          rmdir applications 2>/dev/null || true
+          rmdir software-development 2>/dev/null || true
+
+          rm -f .github/workflows/reorganize-web-apps.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Group Streamlit and Symfony projects under web-apps"
+          git push
